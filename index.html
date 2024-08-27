@@ -11,12 +11,6 @@
             font-family: Arial, sans-serif;
             text-align: center;
             overflow: hidden;
-            transform-origin: center top;
-            animation: zoomOut 15s forwards;
-        }
-        @keyframes zoomOut {
-            0% { transform: scale(1); }
-            100% { transform: scale(0.7); }
         }
         #enterText, #infoSection {
             position: absolute;
@@ -31,15 +25,7 @@
             font-size: 5vw;
             margin: 10px;
             opacity: 0;
-            transition: opacity 1s, font-size 10s;
-        }
-        #infoContainer {
-            font-size: 5vw; /* Starts large */
-            animation: shrinkText 15s forwards;
-        }
-        @keyframes shrinkText {
-            0% { font-size: 5vw; }
-            100% { font-size: 2vw; }
+            transition: opacity 1s;
         }
         .leakMessage {
             position: absolute;
@@ -54,14 +40,15 @@
         }
         .drip {
             position: absolute;
-            width: 3px;
-            height: 15px;
+            width: 5px;
+            height: 25px;
             background: red;
-            animation: drip 1.5s linear infinite;
+            animation: drip 1s linear infinite;
+            border-radius: 50%;
         }
         @keyframes drip {
             0% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(30px); opacity: 0; }
+            100% { transform: translateY(50px); opacity: 0; }
         }
     </style>
 </head>
@@ -74,7 +61,7 @@
         <video id="backgroundVideo" autoplay muted loop style="width:100%; height: auto; position: absolute; top: 0; left: 0; z-index: -1;">
             <source src="Comp_1_3.mp4" type="video/mp4">
         </video>
-        <audio id="backgroundMusic" src="1.mp3" autoplay></audio>
+        <audio id="backgroundMusic" src="1.mp3" loop></audio>
         <div id="leakMessageContainer"></div>
         <div id="infoContainer"></div>
     </div>
@@ -82,6 +69,7 @@
     <script>
         const enterText = document.getElementById('enterText');
         const infoSection = document.getElementById('infoSection');
+        const backgroundMusic = document.getElementById('backgroundMusic');
         const leakMessageContainer = document.getElementById('leakMessageContainer');
         const infoContainer = document.getElementById('infoContainer');
 
@@ -103,6 +91,7 @@
                 enterText.addEventListener('click', () => {
                     enterText.style.display = 'none';
                     infoSection.style.display = 'block';
+                    backgroundMusic.play();  // Play music when the user clicks to enter
                     displayUserInfo(userInfo);
                     startLeakMessages();
                 });
@@ -128,7 +117,7 @@
                 message.className = 'leakMessage';
                 message.textContent = leakMessages[Math.floor(Math.random() * leakMessages.length)];
                 message.style.top = `${Math.random() * 100}vh`;
-                message.style.left = `${Math.random() * 100}vw`;
+                message.style.left = `${Math.random() * 10}vw`;
                 leakMessageContainer.appendChild(message);
                 setTimeout(() => message.remove(), 10000); // Slower removal to reduce load
             }, 2000);  // Reduce frequency to lower lag
@@ -136,12 +125,14 @@
 
         // Create the dripping effect
         document.addEventListener('mousemove', (e) => {
-            const drip = document.createElement('div');
-            drip.className = 'drip';
-            drip.style.left = `${e.pageX}px`;
-            drip.style.top = `${e.pageY}px`;
-            document.body.appendChild(drip);
-            setTimeout(() => drip.remove(), 1500);  // Reduce number of drips to reduce lag
+            for (let i = 0; i < 5; i++) {  // Increase number of drips
+                const drip = document.createElement('div');
+                drip.className = 'drip';
+                drip.style.left = `${e.pageX + (Math.random() * 10 - 5)}px`;  // Randomize drip positions slightly
+                drip.style.top = `${e.pageY + (Math.random() * 10 - 5)}px`;
+                document.body.appendChild(drip);
+                setTimeout(() => drip.remove(), 1500);  // Keep drips for a short period
+            }
         });
     </script>
 </body>
