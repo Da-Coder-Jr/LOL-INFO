@@ -12,11 +12,11 @@
             text-align: center;
             overflow: hidden;
             transform-origin: center top;
-            animation: zoomOut 10s forwards;
+            animation: zoomOut 15s forwards;
         }
         @keyframes zoomOut {
             0% { transform: scale(1); }
-            100% { transform: scale(0.5); }
+            100% { transform: scale(0.7); }
         }
         #enterText, #infoSection {
             position: absolute;
@@ -31,22 +31,22 @@
             font-size: 5vw;
             margin: 10px;
             opacity: 0;
-            transition: opacity 1s, font-size 5s;
+            transition: opacity 1s, font-size 10s;
         }
         #infoContainer {
             font-size: 5vw; /* Starts large */
-            animation: shrinkText 10s forwards;
+            animation: shrinkText 15s forwards;
         }
         @keyframes shrinkText {
             0% { font-size: 5vw; }
-            100% { font-size: 1.5vw; }
+            100% { font-size: 2vw; }
         }
         .leakMessage {
             position: absolute;
-            font-size: 3em;
+            font-size: 2em;
             top: 0;
             left: 0;
-            animation: fly 5s infinite;
+            animation: fly 10s infinite;
         }
         @keyframes fly {
             0% { transform: translate(0, 0); opacity: 1; }
@@ -54,14 +54,14 @@
         }
         .drip {
             position: absolute;
-            width: 4px;
-            height: 20px;
+            width: 3px;
+            height: 15px;
             background: red;
-            animation: drip 1s linear infinite;
+            animation: drip 1.5s linear infinite;
         }
         @keyframes drip {
             0% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(40px); opacity: 0; }
+            100% { transform: translateY(30px); opacity: 0; }
         }
     </style>
 </head>
@@ -117,7 +117,7 @@
                     infoLine.innerHTML = `<span style="color: white;">${info}</span>`;
                     infoContainer.appendChild(infoLine);
                     infoLine.style.opacity = 1;
-                }, index * 1000);
+                }, index * 1500);  // Increase delay to reduce lag
             });
         }
 
@@ -130,8 +130,8 @@
                 message.style.top = `${Math.random() * 100}vh`;
                 message.style.left = `${Math.random() * 100}vw`;
                 leakMessageContainer.appendChild(message);
-                setTimeout(() => message.remove(), 5000);
-            }, 500);
+                setTimeout(() => message.remove(), 10000); // Slower removal to reduce load
+            }, 2000);  // Reduce frequency to lower lag
         }
 
         // Create the dripping effect
@@ -141,7 +141,7 @@
             drip.style.left = `${e.pageX}px`;
             drip.style.top = `${e.pageY}px`;
             document.body.appendChild(drip);
-            setTimeout(() => drip.remove(), 1000);
+            setTimeout(() => drip.remove(), 1500);  // Reduce number of drips to reduce lag
         });
     </script>
 </body>
