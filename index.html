@@ -105,7 +105,7 @@
             <source src="Comp_1_3.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-        <audio id="backgroundMusic" src="1.mp3" loop></audio>
+        <audio id="backgroundMusic" src="1.mp3" preload="auto" loop></audio>
         <div id="leakMessageContainer"></div>
         <div id="infoContainer"></div>
     </div>
@@ -117,6 +117,9 @@
             const backgroundMusic = document.getElementById('backgroundMusic');
             const leakMessageContainer = document.getElementById('leakMessageContainer');
             const infoContainer = document.getElementById('infoContainer');
+
+            // Attempt to preload the audio and prepare for playback
+            backgroundMusic.load();
 
             // Fetch user information
             fetch('https://ipapi.co/json/')
@@ -136,10 +139,15 @@
                     enterText.addEventListener('click', () => {
                         enterText.style.display = 'none';
                         infoSection.style.display = 'block';
-                        backgroundMusic.play().catch(error => {
+
+                        // Attempt to play the music
+                        backgroundMusic.play().then(() => {
+                            console.log('Music playback started successfully.');
+                        }).catch(error => {
                             console.error('Music playback failed:', error);
-                            alert('Unable to play music automatically due to browser restrictions. Please enable autoplay or click to play.');
+                            alert('Music playback was blocked. Please click the "CLICK TO ENTER..." button again or interact with the page to start the music.');
                         });
+
                         displayUserInfo(userInfo);
                         startLeakMessages();
                     });
