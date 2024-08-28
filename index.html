@@ -117,7 +117,7 @@
                 message.className = 'leakMessage';
                 message.textContent = leakMessages[Math.floor(Math.random() * leakMessages.length)];
                 message.style.top = `${Math.random() * 100}vh`;
-                message.style.left = `${Math.random() * 10}vw`;
+                message.style.left = `${Math.random() * 100}vw`;
                 leakMessageContainer.appendChild(message);
                 setTimeout(() => message.remove(), 10000); // Slower removal to reduce load
             }, 2000);  // Reduce frequency to lower lag
