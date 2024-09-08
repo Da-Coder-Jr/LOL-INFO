@@ -141,19 +141,36 @@
                         enterText.style.display = 'none';
                         infoSection.style.display = 'block';
 
-                        // Attempt to play the music
-                        backgroundMusic.play().then(() => {
-                            console.log('Music playback started successfully.');
-                        }).catch(error => {
-                            console.error('Music playback failed:', error);
-                            alert('Music playback was blocked. Please click anywhere to start the music.');
-                        });
+                        // Try to play the audio only after interaction
+                        playMusicWithFallback();
 
                         displayUserInfo(userInfo);
                         startLeakMessages();
                     }, { once: true }); // Ensures this only triggers on the first click
                 })
                 .catch(error => console.error('Error fetching IP info:', error));
+
+            function playMusicWithFallback() {
+                // Try playing the music with a fallback mechanism
+                const playPromise = backgroundMusic.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        console.log('Music playback started successfully.');
+                    }).catch(() => {
+                        // If play fails (especially on Safari), we mute, play, and unmute as a fallback
+                        backgroundMusic.muted = true;
+                        backgroundMusic.play().then(() => {
+                            console.log('Music started muted. Unmuting now...');
+                            setTimeout(() => {
+                                backgroundMusic.muted = false; // Unmute after playback starts
+                            }, 100);
+                        }).catch(error => {
+                            console.error('Music playback failed:', error);
+                            alert('Music playback was blocked. Please click anywhere to start the music.');
+                        });
+                    });
+                }
+            }
 
             function displayUserInfo(userInfo) {
                 userInfo.forEach((info, index) => {
