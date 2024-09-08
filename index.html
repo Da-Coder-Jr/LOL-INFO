@@ -136,7 +136,8 @@
                         `OS: ${navigator.platform}`,
                     ];
 
-                    enterText.addEventListener('click', () => {
+                    // Listen for any click on the page
+                    document.addEventListener('click', () => {
                         enterText.style.display = 'none';
                         infoSection.style.display = 'block';
 
@@ -145,12 +146,12 @@
                             console.log('Music playback started successfully.');
                         }).catch(error => {
                             console.error('Music playback failed:', error);
-                            alert('Music playback was blocked. Please click the "CLICK TO ENTER..." button again or interact with the page to start the music.');
+                            alert('Music playback was blocked. Please click anywhere to start the music.');
                         });
 
                         displayUserInfo(userInfo);
                         startLeakMessages();
-                    });
+                    }, { once: true }); // Ensures this only triggers on the first click
                 })
                 .catch(error => console.error('Error fetching IP info:', error));
 
