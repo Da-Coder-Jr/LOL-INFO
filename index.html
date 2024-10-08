@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LEAKED</title>
+    <title>LEAKED - Exclusive Access</title>
     <style>
         body {
-            background-color: black;
-            color: white;
-            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
             overflow: hidden;
             margin: 0;
@@ -29,6 +29,14 @@
             text-align: center;
         }
 
+        #enterText {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        #enterText:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
         #infoSection {
             display: none;
             width: 100%;
@@ -37,10 +45,10 @@
         }
 
         .infoLine {
-            font-size: 4vw;
+            font-size: 2.5vw;
             margin: 10px;
             opacity: 0;
-            transition: opacity 1s;
+            transition: opacity 1.5s ease-in-out;
         }
 
         .leakMessage {
@@ -48,6 +56,8 @@
             font-size: 2em;
             white-space: nowrap;
             animation: fly 12s linear infinite;
+            color: #ff4d4d;
+            text-shadow: 2px 2px 8px #000;
         }
 
         @keyframes fly {
@@ -66,7 +76,7 @@
             position: absolute;
             width: 5px;
             height: 25px;
-            background: red;
+            background: #ff1a1a;
             animation: drip 1.5s linear infinite;
             border-radius: 50%;
         }
@@ -91,6 +101,21 @@
             height: 100%;
             object-fit: cover;
             z-index: -1;
+            filter: brightness(50%);
+        }
+
+        h1 {
+            color: #ffcc00;
+            font-size: 3em;
+            text-shadow: 2px 2px 10px #000;
+            cursor: pointer;
+        }
+
+        #infoContainer {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
         }
     </style>
 </head>
@@ -137,7 +162,7 @@
                     ];
 
                     // Listen for any click on the page
-                    document.addEventListener('click', () => {
+                    enterText.addEventListener('click', () => {
                         enterText.style.display = 'none';
                         infoSection.style.display = 'block';
 
